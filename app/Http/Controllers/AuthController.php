@@ -15,6 +15,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login']]);
+        return auth()->shouldUse('api');
     }
 
     /**
@@ -62,7 +63,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth()->refresh(true, true));
     }
 
     /**
