@@ -11,6 +11,9 @@ Route::group(['middleware' => 'api'], function($router){
         Route::post('me', 'AuthController@me');
     });
 
+    Route::get('forums/tag/{tag}', 'ForumController@filterTag');
+    Route::get('user/@{username}', 'UserController@show');
+
     Route::post('login', 'AuthController@login');
     Route::post('register', 'RegisterController@register');
     Route::apiResource('forums', 'ForumController');

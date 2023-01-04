@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Forum;
 use App\Http\Controllers\AuthUserTrait;
+use App\Http\Resources\ForumResource;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,7 @@ class ForumController extends Controller
      */
     public function index()
     {
-        return Forum::with('user:id,username')->paginate(3);
+        return ForumResource::collection(Forum::with('user')->paginate(3));
     }
 
     /**
@@ -58,7 +59,12 @@ class ForumController extends Controller
      */
     public function show($id)
     {
-        return Forum::with('user:id,username', 'comments.user:id,username')->find($id);
+        return new ForumResource(Forum::with('user', 'comments.user')->find($id));
+    }
+
+    public function filterTag($tag)
+    {
+        return ForumResource::collection(Forum::with('user')->where('category', $tag)->paginate(3));
     }
 
     /**
