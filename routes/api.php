@@ -13,6 +13,7 @@ Route::group(['middleware' => 'api'], function($router){
 
     Route::get('forums/tag/{tag}', 'ForumController@filterTag');
     Route::get('user/@{username}', 'UserController@show');
+    Route::get('user/@{username}/activity', 'UserController@getActivity');
 
     Route::post('login', 'AuthController@login');
     Route::post('register', 'RegisterController@register');
